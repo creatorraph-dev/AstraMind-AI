@@ -1,7 +1,7 @@
 // =========================
-// CONFIG
+// POLLINATIONS.AI (Bure, Hakuna Akaunti, Hakuna API Key)
 // =========================
-const API_URL = "https://text.pollinations.ai/openai"; // Hakuna API key inayohitajika!
+const API_URL = "https://text.pollinations.ai/openai";
 
 // =========================
 // DOM
@@ -53,11 +53,7 @@ function setTheme(theme) {
 
 function toggleTheme() {
   const current = localStorage.getItem(THEME_KEY) || "dark";
-  if (current === "dark") {
-    setTheme("light");
-  } else {
-    setTheme("dark");
-  }
+  if (current === "dark") { setTheme("light"); } else { setTheme("dark"); }
 }
 
 function updateThemeIcons() {
@@ -78,49 +74,36 @@ function openChat() {
   homeScreen.style.display = "none";
   chatScreen.classList.add("active");
 }
-
 function goHome() {
   chatScreen.classList.remove("active");
   homeScreen.style.display = "";
 }
-
 backBtnChat.addEventListener("click", goHome);
 
 // =========================
 // CHAT HISTORY
 // =========================
-function saveHistory() {
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(chats));
-}
-
+function saveHistory() { localStorage.setItem(HISTORY_KEY, JSON.stringify(chats)); }
 function createNewChat() {
-  currentChat = {
-    id: Date.now(),
-    title: "AstraMind AI",
-    messages: []
-  };
+  currentChat = { id: Date.now(), title: "AstraMind AI", messages: [] };
   chats.unshift(currentChat);
-  saveHistory();
-  renderHistory();
-  chatMessages.innerHTML = "";
-  chatTitle.textContent = "AstraMind AI";
+  saveHistory(); renderHistory();
+  chatMessages.innerHTML = ""; chatTitle.textContent = "AstraMind AI";
   openChat();
 }
-
 function addMessage(sender, text) {
-  if (!currentChat) {
-    createNewChat();
-  }
-  const msg = { sender, text };
-  currentChat.messages.push(msg);
+  if (!currentChat) createNewChat();
+  currentChat.messages.push({ sender, text });
   if (sender === "user" && currentChat.title === "AstraMind AI") {
     currentChat.title = text.slice(0, 35);
   }
-  saveHistory();
-  renderHistory();
-  renderMessages();
+  saveHistory(); renderHistory(); renderMessages();
 }
-
+function formatAIMessage(text) {
+  const safe = escapeHTML(text);
+  const paragraphs = safe.split(/\n\n+/);
+  return paragraphs.map(p => { p = p.trim(); return p ? `<p>${p.replace(/\n/g, '<br>')}</p>` : ''; }).join('');
+}
 function renderMessages() {
   if (!currentChat) return;
   chatMessages.innerHTML = "";
@@ -145,54 +128,28 @@ function renderMessages() {
   });
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
-
-function formatAIMessage(text) {
-  const safe = escapeHTML(text);
-  const paragraphs = safe.split(/\n\n+/);
-  const formatted = paragraphs.map(p => {
-    p = p.trim();
-    if (!p) return '';
-    return `<p>${p.replace(/\n/g, '<br>')}</p>`;
-  }).join('');
-  return formatted;
-}
-
 function renderHistory() {
   historyList.innerHTML = "";
   chats.forEach(chat => {
     const item = document.createElement("div");
-    item.className = "history-item";
-    item.textContent = chat.title;
+    item.className = "history-item"; item.textContent = chat.title;
     item.onclick = () => {
-      currentChat = chat;
-      chatTitle.textContent = chat.title;
-      renderMessages();
-      closeHistoryPanel();
-      openChat();
+      currentChat = chat; chatTitle.textContent = chat.title;
+      renderMessages(); closeHistoryPanel(); openChat();
     };
     historyList.appendChild(item);
   });
 }
 
-// =========================
-// SIDEBAR
-// =========================
-function openHistoryPanel() {
-  historySidebar.classList.add("open");
-  sidebarOverlay.classList.add("show");
-}
-
-function closeHistoryPanel() {
-  historySidebar.classList.remove("open");
-  sidebarOverlay.classList.remove("show");
-}
-
+// Sidebar
+function openHistoryPanel() { historySidebar.classList.add("open"); sidebarOverlay.classList.add("show"); }
+function closeHistoryPanel() { historySidebar.classList.remove("open"); sidebarOverlay.classList.remove("show"); }
 historyBtnHome.addEventListener("click", openHistoryPanel);
 closeSidebar.addEventListener("click", closeHistoryPanel);
 sidebarOverlay.addEventListener("click", closeHistoryPanel);
 
 // =========================
-// POLLINATIONS.AI (Bure, Hakuna Akaunti)
+// POLLINATIONS.AI (HAKUNA PUTER WALA API KEY)
 // =========================
 async function askGemini(prompt) {
   try {
@@ -200,9 +157,9 @@ async function askGemini(prompt) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "openai", // Unaweza kubadilisha model hapa: "openai", "gemini", "claude", nk.
+        model: "openai",
         messages: [
-          { role: "system", content: "You are a helpful assistant named AstraMind AI. Keep answers clear and simple." },
+          { role: "system", content: "You are AstraMind AI, a helpful assistant. Keep answers simple." },
           { role: "user", content: prompt }
         ]
       })
@@ -210,8 +167,6 @@ async function askGemini(prompt) {
 
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
-    
-    // Pollinations.AI inarudisha majibu kwenye muundo sawa na OpenAI
     const text = data.choices[0].message.content;
     addMessage("ai", text);
   } catch (err) {
@@ -230,7 +185,6 @@ function sendFromHome() {
   addMessage("user", text);
   askGemini(text);
 }
-
 function sendFromChat() {
   const text = userInputChat.value.trim();
   if (!text) return;
@@ -243,41 +197,20 @@ sendBtnHome.addEventListener("click", sendFromHome);
 sendBtnChat.addEventListener("click", sendFromChat);
 userInputHome.addEventListener("keypress", e => { if (e.key === "Enter") sendFromHome(); });
 userInputChat.addEventListener("keypress", e => { if (e.key === "Enter") sendFromChat(); });
-
-// =========================
-// NEW CHAT BUTTON
-// =========================
 newChatBtnChat.addEventListener("click", createNewChat);
 
-// =========================
-// CATEGORY BUTTONS
-// =========================
+// Category & Example
 document.querySelectorAll(".cat-btn").forEach(btn => {
-  btn.onclick = () => {
-    userInputHome.value = btn.dataset.prefix;
-    userInputHome.focus();
-  };
+  btn.onclick = () => { userInputHome.value = btn.dataset.prefix; userInputHome.focus(); };
 });
-
 document.querySelectorAll(".example-item").forEach(item => {
-  item.onclick = () => {
-    userInputHome.value = item.dataset.query;
-    sendFromHome();
-  };
+  item.onclick = () => { userInputHome.value = item.dataset.query; sendFromHome(); };
 });
 
-// =========================
-// HELPERS
-// =========================
-function escapeHTML(text) {
-  const div = document.createElement("div");
-  div.textContent = text;
-  return div.innerHTML;
-}
+// Helper
+function escapeHTML(text) { const div = document.createElement("div"); div.textContent = text; return div.innerHTML; }
 
-// =========================
-// INIT
-// =========================
+// Init
 const savedTheme = localStorage.getItem(THEME_KEY) || "dark";
 setTheme(savedTheme);
 renderHistory();
