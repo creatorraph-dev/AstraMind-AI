@@ -1,12 +1,7 @@
-// script.js
-
 // =========================
 // CONFIG
 // =========================
-const API_KEY = "AIzaSyDOlGZPq3rWYlE-_3hZn1Z-msuRVwyOu8k";
-const MODEL = "gemini-2.5-flash";
-const API_URL =
-`https://generativelanguage.googleapis.com/v1/models/${MODEL}:generateContent?key=${API_KEY}`;
+// Hakuna API key inayohitajika! Puter.js ni bure.
 
 
 // =========================
@@ -144,7 +139,7 @@ function saveHistory() {
 function createNewChat() {
   currentChat = {
     id: Date.now(),
-    title: "New Chat",
+    title: "AstraMind AI", // Badilishwa kutoka "New Chat" kuwa jina sahihi
     messages: []
   };
 
@@ -154,7 +149,7 @@ function createNewChat() {
   renderHistory();
 
   chatMessages.innerHTML = "";
-  chatTitle.textContent = "New Chat";
+  chatTitle.textContent = "AstraMind AI"; // Badilishwa kutoka "New Chat"
 
   openChat();
 }
@@ -173,7 +168,7 @@ function addMessage(sender, text) {
 
   if (
     sender === "user" &&
-    currentChat.title === "New Chat"
+    currentChat.title === "AstraMind AI"
   ) {
     currentChat.title =
       text.slice(0, 35);
@@ -302,37 +297,21 @@ sidebarOverlay.addEventListener(
 
 
 // =========================
-// GEMINI
+// PUTER AI (Bure, Hakuna Kikomo)
 // =========================
 async function askGemini(prompt) {
   try {
-    const response =
-      await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-        body: JSON.stringify({
-          contents: [
-            {
-              parts: [
-                {
-                  text: prompt
-                }
-              ]
-            }
-          ]
-        })
-      });
+    // Hakikisha Puter.js imepakiwa. Kama haipo, subiri.
+    if (!window.puter || !puter.ai) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
 
-    const data =
-      await response.json();
+    const response = await puter.ai.chat(prompt, {
+      model: "gpt-4o-mini", // Unaweza kubadilisha model (mfano: gpt-4o, claude-sonnet-4, gemini-2.0-flash)
+      systemMessage: "You are AstraMind AI, a helpful and friendly assistant. Keep answers clear and simple."
+    });
 
-    const text =
-      data.candidates[0]
-      .content.parts[0].text;
-
+    const text = response.message.content;
     addMessage("ai", text);
 
   } catch (err) {
