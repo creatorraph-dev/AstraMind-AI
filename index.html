@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AstraMind AI</title>
+
+  <link rel="stylesheet" href="style.css"/>
+
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="dark-theme">
+
+<!-- SIDEBAR -->
+<div id="historySidebar" class="sidebar">
+  <div class="sidebar-header">
+    <h2>History</h2>
+    <button id="closeSidebar" class="close-btn">&times;</button>
+  </div>
+
+  <div id="historyList" class="history-list"></div>
+</div>
+
+<div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+<!-- HOME -->
+<div id="homeScreen" class="home-screen">
+
+  <div class="hero">
+
+    <div class="header-top">
+
+      <button id="historyBtnHome" class="hero-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+      </button>
+
+      <h1 class="logo">AstraMind AI</h1>
+
+      <button id="themeToggleHome" class="hero-icon">
+        <svg id="themeIconHome" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg>
+      </button>
+
+    </div>
+
+    <div class="hero-content">
+      <p class="tagline"></p>
+      <p class="subtitle"></p>
+    </div>
+
+  </div>
+
+  <div class="card-container">
+
+    <div class="section-title">WHAT DO YOU NEED HELP WITH?</div>
+
+    <div class="category-grid">
+
+      <button class="cat-btn" data-prefix="Math problem: ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19h16"/><path d="M4 14h16"/><path d="M4 9h16"/><path d="M4 4h16"/></svg>
+        Math
+      </button>
+
+      <button class="cat-btn" data-prefix="Code help: ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Code
+      </button>
+
+      <button class="cat-btn" data-prefix="Science question: ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><path d="M12 2a10 10 0 0 1 7.07 17.07A10 10 0 1 1 12 2z"/><path d="M12 6v6l4 2"/></svg>
+        Science
+      </button>
+
+      <button class="cat-btn" data-prefix="Logic puzzle: ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 0 0 7.072 0l-.548-.547A3.374 3.374 0 0 0 14 15.5H10a3.374 3.374 0 0 0-4.243 1.757l-.548.547z"/></svg>
+        Logic
+      </button>
+
+      <button class="cat-btn" data-prefix="Writing help: ">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Writing
+      </button>
+
+      <button class="cat-btn" data-prefix="">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        General
+      </button>
+
+    </div>
+
+    <div class="section-title">TRY AN EXAMPLE</div>
+
+    <div class="example-list">
+
+      <div class="example-item" data-query="Solve x² + 5x + 6 = 0">
+        Solve x² + 5x + 6 = 0
+      </div>
+
+      <div class="example-item" data-query="Explain quantum entanglement simply">
+        Explain quantum entanglement simply
+      </div>
+
+      <div class="example-item" data-query="Why is React useEffect running twice?">
+        Why is React useEffect running twice?
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- INPUT -->
+  <div class="input-area">
+
+    <label for="photoUploadHome" class="photo-upload-btn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+    </label>
+
+    <input type="file" id="photoUploadHome" accept="image/*" hidden/>
+
+    <input
+      type="text"
+      id="userInputHome"
+      placeholder="Ask anything..."
+      autocomplete="off"
+    />
+
+    <button id="sendBtnHome" class="send-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+
+  </div>
+
+</div>
+
+<!-- CHAT -->
+<div id="chatScreen" class="chat-screen">
+
+  <div class="chat-header">
+
+    <button id="backBtnChat" class="clean-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+
+    <div class="chat-header-center">
+      <span id="chatTitle" class="chat-title">AstraMind AI</span>
+    </div>
+
+    <button id="newChatBtnChat" class="clean-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="12" y1="5" x2="12" y2="19"/>
+        <line x1="5" y1="12" x2="19" y2="12"/>
+      </svg>
+    </button>
+
+    <button id="themeToggleChat" class="clean-icon">
+      <svg id="themeIconChat" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"></svg>
+    </button>
+
+  </div>
+
+  <div class="chat-messages" id="chatMessages"></div>
+
+  <div class="chat-input-area">
+
+    <label for="photoUploadChat" class="photo-upload-btn">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+    </label>
+
+    <input type="file" id="photoUploadChat" accept="image/*" hidden/>
+
+    <input
+      type="text"
+      id="userInputChat"
+      placeholder="Message AstraMind..."
+      autocomplete="off"
+    />
+
+    <button id="sendBtnChat" class="send-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="22" y1="2" x2="11" y2="13"/>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+      </svg>
+    </button>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

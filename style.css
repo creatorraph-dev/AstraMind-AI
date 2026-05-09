@@ -1,0 +1,672 @@
+/* REPLACE YOUR ENTIRE style.css WITH THIS */
+
+:root{
+
+  --bg-primary:#f5f7fb;
+  --bg-secondary:#ffffff;
+
+  --text-primary:#0f172a;
+  --text-secondary:#64748b;
+
+  --accent:#7c3aed;
+  --accent-hover:#6d28d9;
+
+  --border:#e2e8f0;
+
+  --glass:rgba(255,255,255,.7);
+  --glass-border:rgba(255,255,255,.4);
+
+  --input-bg:#eef2ff;
+
+  --chat-bg:#ffffff;
+  --chat-header:#ffffff;
+  --chat-input:#ffffff;
+
+  --user-msg:#7c3aed;
+  --ai-msg:#f1f5f9;
+
+  --shadow:
+  0 10px 30px rgba(15,23,42,.06);
+
+  --hero-gradient:
+  linear-gradient(
+  135deg,
+  #7c3aed,
+  #2563eb
+  );
+
+  --glass-dark:
+  rgba(15,23,42,.3);
+
+  --glass-dark-border:
+  rgba(255,255,255,.08);
+}
+
+/* DARK MODE */
+
+.dark-theme{
+
+  --bg-primary:#0b1020;
+  --bg-secondary:#111827;
+
+  --text-primary:#ffffff;
+  --text-secondary:#94a3b8;
+
+  --border:#243041;
+
+  --glass:
+  rgba(255,255,255,.05);
+
+  --glass-border:
+  rgba(255,255,255,.08);
+
+  --input-bg:#111827;
+
+  --chat-bg:#0b1020;
+  --chat-header:#111827;
+  --chat-input:#111827;
+
+  --ai-msg:#182234;
+
+  --shadow:
+  0 10px 30px rgba(0,0,0,.4);
+
+  --hero-gradient:
+  linear-gradient(
+  135deg,
+  #111827,
+  #1e1b4b
+  );
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--bg-primary);
+  color:var(--text-primary);
+  transition:.25s;
+}
+
+/* HOME */
+
+.home-screen{
+  max-width:700px;
+  margin:auto;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+.hero{
+
+  background:var(--hero-gradient);
+
+  padding:1.4rem;
+
+  border-bottom-left-radius:34px;
+  border-bottom-right-radius:34px;
+
+  color:white;
+}
+
+.header-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+
+  font-size:2rem;
+  font-weight:800;
+
+  background:
+  linear-gradient(
+  to right,
+  #c084fc,
+  #60a5fa
+  );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero-content{
+  text-align:center;
+  margin-top:2rem;
+}
+
+.tagline{
+  font-size:1.4rem;
+  font-weight:700;
+  color:white;
+}
+
+.subtitle{
+  margin-top:.8rem;
+  color:#dbeafe;
+  font-size:1rem;
+}
+
+.hero-icon{
+
+  width:48px;
+  height:48px;
+
+  border:none;
+  border-radius:18px;
+
+  background:
+  rgba(255,255,255,.12);
+
+  backdrop-filter:blur(20px);
+
+  color:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.hero-icon:hover{
+  transform:scale(1.05);
+}
+
+/* CARD */
+
+.card-container{
+
+  background:var(--bg-secondary);
+
+  margin:2rem 1rem 1rem;   /* ← imebadilishwa: ilikuwa -1rem, sasa 2rem */
+
+  border-radius:30px;
+
+  padding:1.3rem;
+
+  box-shadow:var(--shadow);
+
+  border:1px solid var(--border);
+}
+
+.section-title{
+
+  font-size:.75rem;
+  font-weight:800;
+
+  letter-spacing:.12em;
+
+  color:var(--text-secondary);
+
+  margin-bottom:1rem;
+}
+
+.category-grid{
+
+  display:grid;
+  grid-template-columns:1fr 1fr;
+
+  gap:1rem;
+
+  margin-bottom:2rem;
+}
+
+/* PREMIUM BUTTONS */
+
+.cat-btn{
+
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+
+  padding:1rem;
+
+  border-radius:24px;
+
+  border:1px solid var(--glass-border);
+
+  background:var(--glass);
+
+  backdrop-filter:blur(20px);
+
+  color:var(--text-primary);
+
+  font-size:.95rem;
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.25s;
+
+  box-shadow:
+  0 6px 20px rgba(0,0,0,.05);
+}
+
+.cat-btn:hover{
+
+  transform:translateY(-2px);
+
+  border-color:
+  rgba(124,58,237,.3);
+}
+
+.cat-btn svg{
+  width:22px;
+  height:22px;
+  flex-shrink:0;
+  stroke:#a78bfa;
+}
+
+/* EXAMPLES */
+
+.example-list{
+  display:flex;
+  flex-direction:column;
+  gap:.9rem;
+}
+
+.example-item{
+
+  display:flex;
+  align-items:center;
+  gap:.8rem;
+
+  padding:1rem;
+
+  border-radius:22px;
+
+  border:1px solid var(--glass-border);
+
+  background:var(--glass);
+
+  backdrop-filter:blur(20px);
+
+  color:var(--text-primary);
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.example-item:hover{
+  transform:translateY(-2px);
+}
+
+.example-item svg{
+  width:20px;
+  height:20px;
+  stroke:#60a5fa;
+}
+
+/* INPUT */
+
+.input-area{
+
+  display:flex;
+  align-items:center;
+  gap:.7rem;
+
+  padding:1rem;
+
+  margin-top:auto;
+}
+
+.photo-upload-btn{
+
+  width:50px;
+  height:50px;
+
+  border-radius:18px;
+
+  background:var(--glass);
+
+  border:1px solid var(--glass-border);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  color:var(--text-secondary);
+
+  cursor:pointer;
+
+  backdrop-filter:blur(20px);
+}
+
+#userInputHome{
+
+  flex:1;
+
+  padding:1rem 1.1rem;
+
+  border:none;
+
+  border-radius:22px;
+
+  background:var(--input-bg);
+
+  color:var(--text-primary);
+
+  font-size:1rem;
+
+  outline:none;
+}
+
+.send-btn{
+
+  width:52px;
+  height:52px;
+
+  border:none;
+
+  border-radius:20px;
+
+  background:var(--accent);
+
+  color:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+  box-shadow:
+  0 8px 24px rgba(124,58,237,.35);
+}
+
+.send-btn:hover{
+
+  transform:scale(1.05);
+
+  background:var(--accent-hover);
+}
+
+/* CHAT */
+
+.chat-screen{
+
+  position:fixed;
+  inset:0;
+
+  background:var(--chat-bg);
+
+  display:none;
+  flex-direction:column;
+}
+
+.chat-screen.active{
+  display:flex;
+}
+
+.chat-header{
+
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+
+  padding:.8rem;
+
+  background:var(--chat-header);
+
+  border-bottom:1px solid var(--border);
+
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.chat-header-center{
+  flex:1;
+}
+
+.chat-title{
+
+  font-size:1rem;
+  font-weight:700;
+
+  color:var(--text-primary);
+}
+
+.clean-icon{
+
+  width:44px;
+  height:44px;
+
+  border:none;
+
+  border-radius:16px;
+
+  background:transparent;
+
+  color:var(--text-primary);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.clean-icon:hover{
+  background:rgba(127,127,127,.08);
+}
+
+.chat-messages{
+
+  flex:1;
+
+  overflow-y:auto;
+
+  padding:1rem;
+
+  display:flex;
+  flex-direction:column;
+
+  gap:1rem;
+}
+
+.message{
+  max-width:85%;
+}
+
+.message.user{
+
+  align-self:flex-end;
+
+  background:var(--user-msg);
+
+  color:white;
+
+  padding:.9rem 1rem;
+
+  border-radius:
+  22px 22px 8px 22px;
+}
+
+/* ===== .message.ai IMEIMARISHWA KWA USAFI WA AYA ===== */
+.message.ai{
+
+  align-self:flex-start;
+
+  color:var(--text-primary);
+
+  background:transparent;
+
+  padding:.2rem;
+
+  line-height:1.7;            /* → nafasi kati ya mistari */
+}
+
+.message.ai p{
+  margin:0.6em 0;            /* → nafasi kati ya aya */
+}
+
+.message.ai br{
+  display:block;
+  content:"";
+  margin-top:0.2em;
+}
+
+/* ===== MWISHO WA MABORESHO ===== */
+
+.label{
+
+  font-size:.75rem;
+
+  opacity:.7;
+
+  margin-bottom:.3rem;
+}
+
+.copy-btn{
+
+  margin-top:.5rem;
+
+  border:none;
+
+  background:none;
+
+  color:var(--text-secondary);
+
+  cursor:pointer;
+}
+
+.chat-input-area{
+
+  display:flex;
+  align-items:center;
+
+  gap:.7rem;
+
+  padding:1rem;
+
+  background:var(--chat-input);
+
+  border-top:1px solid var(--border);
+}
+
+#userInputChat{
+
+  flex:1;
+
+  padding:1rem;
+
+  border-radius:22px;
+
+  border:1px solid var(--border);
+
+  background:var(--input-bg);
+
+  color:var(--text-primary);
+
+  font-size:1rem;
+
+  outline:none;
+}
+
+#userInputChat:focus{
+  border-color:var(--accent);
+}
+
+/* SIDEBAR */
+
+.sidebar{
+
+  position:fixed;
+
+  top:0;
+  left:0;
+
+  width:300px;
+  height:100%;
+
+  background:var(--bg-secondary);
+
+  transform:translateX(-100%);
+
+  transition:.3s;
+
+  z-index:100;
+
+  padding:1rem;
+
+  border-right:1px solid var(--border);
+}
+
+.sidebar.open{
+  transform:translateX(0);
+}
+
+.sidebar-header{
+
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+
+  margin-bottom:1rem;
+}
+
+.close-btn{
+
+  border:none;
+  background:none;
+
+  color:var(--text-primary);
+
+  font-size:1.5rem;
+}
+
+.history-list{
+
+  display:flex;
+  flex-direction:column;
+
+  gap:.8rem;
+}
+
+.history-item{
+
+  padding:1rem;
+
+  border-radius:18px;
+
+  background:var(--glass);
+
+  border:1px solid var(--glass-border);
+
+  cursor:pointer;
+
+  color:var(--text-primary);
+
+  backdrop-filter:blur(20px);
+}
+
+.sidebar-overlay{
+
+  position:fixed;
+  inset:0;
+
+  background:rgba(0,0,0,.5);
+
+  display:none;
+
+  z-index:99;
+}
+
+.sidebar-overlay.show{
+  display:block;
+}
