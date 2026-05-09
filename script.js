@@ -1,8 +1,7 @@
 // =========================
 // CONFIG
 // =========================
-// Hakuna API key inayohitajika! Puter.js ni bure.
-
+const API_URL = "https://text.pollinations.ai/openai"; // Hakuna API key inayohitajika!
 
 // =========================
 // DOM
@@ -34,7 +33,6 @@ const themeIconChat = document.getElementById("themeIconChat");
 
 const newChatBtnChat = document.getElementById("newChatBtnChat");
 
-
 // =========================
 // STORAGE
 // =========================
@@ -44,24 +42,17 @@ const THEME_KEY = "astramind_theme";
 let chats = JSON.parse(localStorage.getItem(HISTORY_KEY)) || [];
 let currentChat = null;
 
-
 // =========================
 // THEME
 // =========================
 function setTheme(theme) {
-  document.body.className =
-    theme === "light"
-      ? "light-theme"
-      : "dark-theme";
-
+  document.body.className = theme === "light" ? "light-theme" : "dark-theme";
   localStorage.setItem(THEME_KEY, theme);
   updateThemeIcons();
 }
 
 function toggleTheme() {
-  const current =
-    localStorage.getItem(THEME_KEY) || "dark";
-
+  const current = localStorage.getItem(THEME_KEY) || "dark";
   if (current === "dark") {
     setTheme("light");
   } else {
@@ -70,42 +61,15 @@ function toggleTheme() {
 }
 
 function updateThemeIcons() {
-  const isDark =
-    document.body.classList.contains("dark-theme");
-
-  const sun = `
-  <circle cx="12" cy="12" r="5"/>
-  <line x1="12" y1="1" x2="12" y2="3"/>
-  <line x1="12" y1="21" x2="12" y2="23"/>
-  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-  <line x1="1" y1="12" x2="3" y2="12"/>
-  <line x1="21" y1="12" x2="23" y2="12"/>
-  `;
-
-  const moon = `
-  <path d="M21 12.79A9 9 0 1 1 11.21 3
-  7 7 0 0 0 21 12.79z"/>
-  `;
-
-  // opposite icon
-  themeIconHome.innerHTML =
-    isDark ? sun : moon;
-
-  themeIconChat.innerHTML =
-    isDark ? sun : moon;
+  const isDark = document.body.classList.contains("dark-theme");
+  const sun = `<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>`;
+  const moon = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+  themeIconHome.innerHTML = isDark ? moon : sun;
+  themeIconChat.innerHTML = isDark ? moon : sun;
 }
 
-themeToggleHome.addEventListener(
-  "click",
-  toggleTheme
-);
-
-themeToggleChat.addEventListener(
-  "click",
-  toggleTheme
-);
-
+themeToggleHome.addEventListener("click", toggleTheme);
+themeToggleChat.addEventListener("click", toggleTheme);
 
 // =========================
 // NAVIGATION
@@ -120,37 +84,26 @@ function goHome() {
   homeScreen.style.display = "";
 }
 
-backBtnChat.addEventListener(
-  "click",
-  goHome
-);
-
+backBtnChat.addEventListener("click", goHome);
 
 // =========================
 // CHAT HISTORY
 // =========================
 function saveHistory() {
-  localStorage.setItem(
-    HISTORY_KEY,
-    JSON.stringify(chats)
-  );
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(chats));
 }
 
 function createNewChat() {
   currentChat = {
     id: Date.now(),
-    title: "AstraMind AI", // Badilishwa kutoka "New Chat" kuwa jina sahihi
+    title: "AstraMind AI",
     messages: []
   };
-
   chats.unshift(currentChat);
-
   saveHistory();
   renderHistory();
-
   chatMessages.innerHTML = "";
-  chatTitle.textContent = "AstraMind AI"; // Badilishwa kutoka "New Chat"
-
+  chatTitle.textContent = "AstraMind AI";
   openChat();
 }
 
@@ -158,22 +111,11 @@ function addMessage(sender, text) {
   if (!currentChat) {
     createNewChat();
   }
-
-  const msg = {
-    sender,
-    text
-  };
-
+  const msg = { sender, text };
   currentChat.messages.push(msg);
-
-  if (
-    sender === "user" &&
-    currentChat.title === "AstraMind AI"
-  ) {
-    currentChat.title =
-      text.slice(0, 35);
+  if (sender === "user" && currentChat.title === "AstraMind AI") {
+    currentChat.title = text.slice(0, 35);
   }
-
   saveHistory();
   renderHistory();
   renderMessages();
@@ -185,14 +127,9 @@ function renderMessages() {
   currentChat.messages.forEach(msg => {
     const div = document.createElement("div");
     div.className = `message ${msg.sender}`;
-    
-    // Kwa ujumbe wa AI, tengeneza aya na mistari
     const formattedText = msg.sender === "ai" ? formatAIMessage(msg.text) : escapeHTML(msg.text);
-    
     div.innerHTML = `
-      <div class="label">
-        ${msg.sender === "user" ? "You" : "AstraMind"}
-      </div>
+      <div class="label">${msg.sender === "user" ? "You" : "AstraMind"}</div>
       <div>${formattedText}</div>
       ${msg.sender === "ai" ? `<button class="copy-btn">Copy</button>` : ""}
     `;
@@ -209,18 +146,12 @@ function renderMessages() {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Kazi ya kupanga maandishi ya AI kuwa na aya na mistari
 function formatAIMessage(text) {
-  // Salama kwanza
   const safe = escapeHTML(text);
-  // Gawanya kwa mistari miwili mipya (aya)
   const paragraphs = safe.split(/\n\n+/);
-  // Kila aya, geuza mistari mipya kuwa <br>
   const formatted = paragraphs.map(p => {
-    // Ondoa nafasi za mwanzoni/mwisho
     p = p.trim();
     if (!p) return '';
-    // Badilisha \n moja kuwa <br>
     return `<p>${p.replace(/\n/g, '<br>')}</p>`;
   }).join('');
   return formatted;
@@ -228,223 +159,125 @@ function formatAIMessage(text) {
 
 function renderHistory() {
   historyList.innerHTML = "";
-
   chats.forEach(chat => {
-    const item =
-      document.createElement("div");
-
-    item.className =
-      "history-item";
-
-    item.textContent =
-      chat.title;
-
+    const item = document.createElement("div");
+    item.className = "history-item";
+    item.textContent = chat.title;
     item.onclick = () => {
       currentChat = chat;
-
-      chatTitle.textContent =
-        chat.title;
-
+      chatTitle.textContent = chat.title;
       renderMessages();
-
       closeHistoryPanel();
-
       openChat();
     };
-
     historyList.appendChild(item);
   });
 }
-
 
 // =========================
 // SIDEBAR
 // =========================
 function openHistoryPanel() {
-  historySidebar.classList.add(
-    "open"
-  );
-
-  sidebarOverlay.classList.add(
-    "show"
-  );
+  historySidebar.classList.add("open");
+  sidebarOverlay.classList.add("show");
 }
 
 function closeHistoryPanel() {
-  historySidebar.classList.remove(
-    "open"
-  );
-
-  sidebarOverlay.classList.remove(
-    "show"
-  );
+  historySidebar.classList.remove("open");
+  sidebarOverlay.classList.remove("show");
 }
 
-historyBtnHome.addEventListener(
-  "click",
-  openHistoryPanel
-);
-
-closeSidebar.addEventListener(
-  "click",
-  closeHistoryPanel
-);
-
-sidebarOverlay.addEventListener(
-  "click",
-  closeHistoryPanel
-);
-
+historyBtnHome.addEventListener("click", openHistoryPanel);
+closeSidebar.addEventListener("click", closeHistoryPanel);
+sidebarOverlay.addEventListener("click", closeHistoryPanel);
 
 // =========================
-// PUTER AI (Bure, Hakuna Kikomo)
+// POLLINATIONS.AI (Bure, Hakuna Akaunti)
 // =========================
 async function askGemini(prompt) {
   try {
-    // Hakikisha Puter.js imepakiwa. Kama haipo, subiri.
-    if (!window.puter || !puter.ai) {
-      await new Promise(resolve => setTimeout(resolve, 500));
-    }
-
-    const response = await puter.ai.chat(prompt, {
-      model: "gpt-4o-mini", // Unaweza kubadilisha model (mfano: gpt-4o, claude-sonnet-4, gemini-2.0-flash)
-      systemMessage: "You are AstraMind AI, a helpful and friendly assistant. Keep answers clear and simple."
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "openai", // Unaweza kubadilisha model hapa: "openai", "gemini", "claude", nk.
+        messages: [
+          { role: "system", content: "You are a helpful assistant named AstraMind AI. Keep answers clear and simple." },
+          { role: "user", content: prompt }
+        ]
+      })
     });
 
-    const text = response.message.content;
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    
+    // Pollinations.AI inarudisha majibu kwenye muundo sawa na OpenAI
+    const text = data.choices[0].message.content;
     addMessage("ai", text);
-
   } catch (err) {
-    addMessage(
-      "ai",
-      "Error: " + err.message
-    );
+    addMessage("ai", "Error: " + err.message);
   }
 }
-
 
 // =========================
 // SEND
 // =========================
 function sendFromHome() {
-  const text =
-    userInputHome.value.trim();
-
+  const text = userInputHome.value.trim();
   if (!text) return;
-
   userInputHome.value = "";
-
   openChat();
-
-  addMessage(
-    "user",
-    text
-  );
-
+  addMessage("user", text);
   askGemini(text);
 }
 
 function sendFromChat() {
-  const text =
-    userInputChat.value.trim();
-
+  const text = userInputChat.value.trim();
   if (!text) return;
-
   userInputChat.value = "";
-
-  addMessage(
-    "user",
-    text
-  );
-
+  addMessage("user", text);
   askGemini(text);
 }
 
-sendBtnHome.addEventListener(
-  "click",
-  sendFromHome
-);
-
-sendBtnChat.addEventListener(
-  "click",
-  sendFromChat
-);
-
-userInputHome.addEventListener(
-  "keypress",
-  e => {
-    if (e.key === "Enter") {
-      sendFromHome();
-    }
-  }
-);
-
-userInputChat.addEventListener(
-  "keypress",
-  e => {
-    if (e.key === "Enter") {
-      sendFromChat();
-    }
-  }
-);
-
+sendBtnHome.addEventListener("click", sendFromHome);
+sendBtnChat.addEventListener("click", sendFromChat);
+userInputHome.addEventListener("keypress", e => { if (e.key === "Enter") sendFromHome(); });
+userInputChat.addEventListener("keypress", e => { if (e.key === "Enter") sendFromChat(); });
 
 // =========================
 // NEW CHAT BUTTON
 // =========================
-newChatBtnChat.addEventListener(
-  "click",
-  createNewChat
-);
-
+newChatBtnChat.addEventListener("click", createNewChat);
 
 // =========================
 // CATEGORY BUTTONS
 // =========================
-document
-.querySelectorAll(".cat-btn")
-.forEach(btn => {
+document.querySelectorAll(".cat-btn").forEach(btn => {
   btn.onclick = () => {
-    userInputHome.value =
-      btn.dataset.prefix;
-
+    userInputHome.value = btn.dataset.prefix;
     userInputHome.focus();
   };
 });
 
-document
-.querySelectorAll(".example-item")
-.forEach(item => {
+document.querySelectorAll(".example-item").forEach(item => {
   item.onclick = () => {
-    userInputHome.value =
-      item.dataset.query;
-
+    userInputHome.value = item.dataset.query;
     sendFromHome();
   };
 });
-
 
 // =========================
 // HELPERS
 // =========================
 function escapeHTML(text) {
-  const div =
-    document.createElement("div");
-
+  const div = document.createElement("div");
   div.textContent = text;
-
   return div.innerHTML;
 }
-
 
 // =========================
 // INIT
 // =========================
-const savedTheme =
-  localStorage.getItem(
-    THEME_KEY
-  ) || "dark";
-
+const savedTheme = localStorage.getItem(THEME_KEY) || "dark";
 setTheme(savedTheme);
-
 renderHistory();
